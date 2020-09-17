@@ -1,0 +1,463 @@
+import greenfoot.*;
+
+public class MyWorld extends ArrayWallWorld
+{
+    private static final int DEFAULT_ROWS = 45;
+    private static final int DEFAULT_COLS = 57;
+
+    public MyWorld()
+    {    
+        super(DEFAULT_ROWS, DEFAULT_COLS );
+    }
+
+    public MyWorld( int numRows, int numCols )
+    {
+        super( numRows, numCols );
+    }
+
+    public void allMiddle()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+
+        for ( int r = 1; r < walls.length - 1; r++ )
+        {
+            for ( int c = 1; c < walls[r].length - 1; c++ )
+            {
+                walls[r][c] = true;
+            }
+        }
+        draw2D( walls );
+    }
+
+    public void border()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        
+        for ( int r = 0; r < walls.length; r++ )
+        {
+            for ( int c = 0; c < walls[r].length; c++ )
+            {
+                walls[r][c] = true;
+            }
+        }
+
+        for ( int r = 1; r < walls.length - 1; r++ )
+        {
+            for ( int c = 1; c < walls[r].length - 1; c++ )
+            {
+                walls[r][c] = false;
+            }
+        }
+        draw2D( walls );
+    }
+
+    public void checkered()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        
+        for ( int r = 0; r < walls.length; r+=2 )
+        {
+            for ( int c = 0; c < walls[r].length; c+=2 )
+            {
+                walls[r][c] = true;
+            }
+        }
+        draw2D( walls );
+    } 
+
+    public void diagonals()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        int sub = 0;
+        for ( int r = 0; r < walls.length; r++ )
+        {
+            for ( int c = 6 + sub; c < 7 + sub; c++)
+            {
+                walls[r][c] = true;
+            }
+            for ( int c = walls[r].length - 7 - sub; c > walls[r].length - 8 - sub; c--)
+            {
+                walls[r][c] = true;
+            }
+            sub++;
+        }
+        draw2D( walls );
+    }
+
+    public void exterior()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        int d = getNumRows()/2 + 1;
+        int w = getNumRows()/2;
+        int l = getNumCols()/2;
+        for ( int r = 0; r < walls.length ; r++ )
+        {
+            for ( int c = 0; c < walls[r].length ; c++ )
+            {
+                if (Math.sqrt((c - l) * (c -l)+(r - w) * (r -w)) >= d){
+                    walls[r][c] = true;
+                }
+            }
+        }
+        draw2D( walls );
+    }
+
+    public void fibonacci()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        int current = 1;
+        int old = 0;
+        for ( int r = 0; r < walls.length; r+= 5 )
+        {
+            for ( int c = 0; c < current && c < walls[r].length; c++ )
+            {
+                
+                walls[r][c] = true;
+            }
+            int temp = current;
+                current = current + old;
+                old = temp;
+                
+        }
+        draw2D( walls );
+    }
+
+    public void geometricSeries()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        int doubler = 1;
+        for ( int r = 0; r < walls.length; r+= 5 )
+        {
+            for ( int c = 0; c < doubler && c < walls[r].length; c++ )
+            {
+                walls[r][c] = true;
+            }
+            doubler *= 2;
+        }
+        draw2D( walls );
+    }  
+
+    public void hemisphereLeft()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        for ( int r = 0; r < walls.length; r++ )
+        {
+            for ( int c = 0; c < walls[r].length / 2; c++ )
+            {
+                walls[r][c] = true;
+            }
+        }
+        draw2D( walls );
+    }
+
+    public void hemisphereRight()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        for ( int r = 0; r < walls.length; r++ )
+        {
+            for ( int c = walls[r].length / 2; c < walls[r].length; c++ )
+            {
+                walls[r][c] = true;
+            }
+        }
+        draw2D( walls );
+    }
+
+    public void hemisphereTop()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        for ( int r = 0; r < walls.length / 2; r++ )
+        {
+            for ( int c = 0; c < walls[r].length; c++ )
+            {
+                walls[r][c] = true;
+            }
+        }
+        draw2D( walls );
+    }
+
+    public void hemisphereBottom()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        for ( int r = walls.length / 2; r < walls.length; r++ )
+        {
+            for ( int c = 0; c < walls[r].length; c++ )
+            {
+                walls[r][c] = true;
+            }
+        }
+        draw2D( walls );
+    }
+
+    public void isosclesRightA()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        int remove = 0;
+        for ( int r = 0; r < walls.length; r++ )
+        {
+            for ( int c = 6; c < walls[r].length - remove - 6; c++ )
+            {
+                walls[r][c] = true;
+            }
+            remove ++;
+        }
+        draw2D( walls );
+    }
+
+    public void isosclesRightB()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        int remove = 1;
+        for ( int r = 0; r < walls.length; r++ )
+        {
+            for ( int c = 6; c < remove + 6; c++ )
+            {
+                walls[r][c] = true;
+            }
+            remove ++;
+        }
+        draw2D( walls );
+    }    
+
+    public void isosclesRightC()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        int remove = 0;
+        for ( int r = 0; r < walls.length; r++ )
+        {
+            for ( int c = 6 + remove; c < walls[r].length- 6; c++ )
+            {
+                walls[r][c] = true;
+            }
+            remove ++;
+        }
+        draw2D( walls );
+    }
+
+    public void isosclesRightD()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        int remove = 0;
+        for ( int r = 0; r < walls.length; r++ )
+        {
+            for ( int c = walls[r].length - remove - 7; c < walls[r].length -6; c++ )
+            {
+                walls[r][c] = true;
+            }
+            remove ++;
+        }
+        draw2D( walls );
+    }      
+
+    public void jaggedSteps()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        boolean right = true;
+        for ( int r = 1; r < walls.length; r+=2 )
+        {
+            if(right == true){
+            for ( int c = 0; c < walls[r].length - 1; c++ )
+            {
+                walls[r][c] = true;
+            }
+        }else{
+            for ( int c = 1; c < walls[r].length; c++ )
+            {
+                walls[r][c] = true;
+            }
+        }
+        right = !right;
+        }
+        draw2D( walls );
+    }
+
+    public void knitting()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        int patt = 0; 
+        for ( int r = 0; r < walls.length ; r++ )
+        {
+            if(patt == 0){
+                for ( int c = 4; c < walls[r].length; c+= 6  )
+                {
+                    walls[r][c] = true;
+                }
+            }else if(patt == 1){ 
+
+                for( int c = 0; c < walls[r].length - 2; c += 6 ) {
+                    walls[r][c] = true;
+                    walls[r][c + 1] = true;
+                    walls[r][c + 2] = true;
+                }
+                for( int c = 3; c < walls[r].length - 2; c += 6 ) {
+                    walls[r][c + 1] = true;
+                }
+            }else if(patt == 2){ 
+                for ( int c = 4; c < walls[r].length; c+= 6  )
+                {
+                    walls[r][c] = true;
+                }
+            }else if(patt == 3){ 
+                for ( int c = 1; c < walls[r].length; c+= 6  )
+                {
+                    walls[r][c] = true;
+                }
+            }else if(patt == 4){ 
+                for( int c = 3; c < walls[r].length - 2; c += 6 ) {
+                    walls[r][c] = true;
+                    walls[r][c + 1] = true;
+                    walls[r][c + 2] = true;
+                }
+                for( int c = 0; c < walls[r].length - 2; c += 6 ) {
+                    walls[r][c + 1] = true;
+                }
+            }else if(patt == 5){ 
+                for ( int c = 1; c < walls[r].length; c+= 6  )
+                {
+                    walls[r][c] = true;
+                }
+            }
+            patt++;
+            if (patt == 6)patt = 0;
+        }
+        draw2D( walls );
+    }
+
+    public void longitudes()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        for ( int r = 0; r < walls.length; r++ )
+        {
+            for ( int c = 1; c < walls[r].length; c+= 3 )
+            {
+                walls[r][c] = true;
+            }
+        }
+        draw2D( walls );
+    }
+
+    public void latitudes()
+    {
+        boolean [][] walls = new boolean[getNumRows()][getNumCols()];
+        for ( int r = 1; r < walls.length; r+=3 )
+        {
+            for ( int c = 0; c < walls[r].length; c++ )
+            {
+                walls[r][c] = true;
+            }
+        }
+        draw2D( walls );
+    }
+
+    public void act()
+    {
+        if ( Greenfoot.isKeyDown( "a" ) )
+        {
+            this.allMiddle();
+        }
+        if ( Greenfoot.isKeyDown( "b" ) )
+        {
+            this.border();
+        }
+        if ( Greenfoot.isKeyDown( "c" ) )
+        {
+            this.checkered();
+        }
+        if ( Greenfoot.isKeyDown( "d" ) )
+        {
+            this.diagonals();
+        }
+        if ( Greenfoot.isKeyDown( "e" ) )
+        {
+            this.exterior();
+        }
+        if ( Greenfoot.isKeyDown( "f" ) )
+        {
+            this.fibonacci();
+        }
+        if ( Greenfoot.isKeyDown( "g" ) )
+        {
+            this.geometricSeries();
+        }
+        if ( Greenfoot.isKeyDown( "h" ) && Greenfoot.isKeyDown( "1" ) )
+        {
+            this.hemisphereLeft();
+        }
+        if ( Greenfoot.isKeyDown( "h" ) && Greenfoot.isKeyDown( "2" ) )
+        {
+            this.hemisphereRight();
+        }
+        if ( Greenfoot.isKeyDown( "h" ) && Greenfoot.isKeyDown( "3" ) )
+        {
+            this.hemisphereTop();
+        }
+        if ( Greenfoot.isKeyDown( "h" ) && Greenfoot.isKeyDown( "4" ) )
+        {
+            this.hemisphereBottom();
+        }
+        if ( Greenfoot.isKeyDown( "i" ) && Greenfoot.isKeyDown( "1" ))
+        {
+            this.isosclesRightA();
+        }
+        if ( Greenfoot.isKeyDown( "i" ) && Greenfoot.isKeyDown( "2" ))
+        {
+            this.isosclesRightB();
+        }
+        if ( Greenfoot.isKeyDown( "i" ) && Greenfoot.isKeyDown( "3" ))
+        {
+            this.isosclesRightC();
+        }
+        if ( Greenfoot.isKeyDown( "i" ) && Greenfoot.isKeyDown( "4" ))
+        {
+            this.isosclesRightD();
+        }
+        if ( Greenfoot.isKeyDown( "j" ) )
+        {
+            this.jaggedSteps();
+        }
+        if ( Greenfoot.isKeyDown( "k" ) )
+        {
+            this.knitting();
+        }
+        if ( Greenfoot.isKeyDown( "l" ) && Greenfoot.isKeyDown( "1" ))
+        {
+            this.latitudes();
+        }
+        if ( Greenfoot.isKeyDown( "l" ) && Greenfoot.isKeyDown( "2" ))
+        {
+            this.longitudes();
+        }
+        if ( Greenfoot.isKeyDown( "F1" ) )
+        {
+            MyWorld w = new MyWorld(DEFAULT_ROWS, DEFAULT_COLS);
+            Greenfoot.setWorld( w );
+        }
+
+        if ( Greenfoot.isKeyDown( "F2" ) )
+        {
+            MyWorld w = new MyWorld( DEFAULT_COLS, DEFAULT_ROWS );
+            Greenfoot.setWorld( w );
+        }
+
+        if ( Greenfoot.isKeyDown( "F3" ) )
+        {
+            MyWorld w = new MyWorld( DEFAULT_ROWS / 2, DEFAULT_COLS / 2 );
+            Greenfoot.setWorld( w );
+        }
+
+        if ( Greenfoot.isKeyDown( "F4" ) )
+        {
+            MyWorld w = new MyWorld( DEFAULT_COLS / 2, DEFAULT_ROWS / 2 );
+            Greenfoot.setWorld( w );
+        }
+
+        if ( Greenfoot.isKeyDown( "F5" ) )
+        {
+            int randRow = (int)(Math.random() * 50 ) + 10;
+            int randCol = (int)(Math.random() * 50 ) + 10;
+
+            MyWorld w = new MyWorld( randRow / 2, randCol / 2 );
+            Greenfoot.setWorld( w );
+        }
+    }
+}
